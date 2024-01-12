@@ -1,0 +1,71 @@
+﻿<Window x:Class="RestaurantMenu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Restaurant Menu" Height="450" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Add Food Form -->
+        <StackPanel Margin="10">
+            <TextBlock Text="Add New Food" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Name:" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtFoodName" Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Price:" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtFoodPrice" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Photo URL:" Margin="0,0,10,0"/>
+                <TextBox x:Name="txtFoodPhoto" Width="200"/>
+                <Button Content="Upload Photo" Click="UploadPhoto_Click"/>
+
+            </StackPanel>
+            <Button Content="Add Food" Click="AddFood_Click"/>
+
+        </StackPanel>
+
+        <!-- Display Food Menu -->
+        <ListBox x:Name="lstMenu" Grid.Row="1" Margin="10">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Photo}" Width="50" Height="50" Margin="0,0,10,0">
+                            <Image.ToolTip>
+                                <ToolTip>
+                                    <Image Source="{Binding Photo}" Width="150" Height="150"/>
+                                </ToolTip>
+                            </Image.ToolTip>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Image.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ToolTip.IsOpen">
+                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="Image.MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ToolTip.IsOpen">
+                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Width="150"/>
+                        <TextBlock Text="{Binding Price, StringFormat={}{0:C}}" Width="100"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
