@@ -26,7 +26,9 @@ namespace RestaurantMenu
             if (decimal.TryParse(txtFoodPrice.Text, out price))
             {
                 string photo = txtFoodPhoto.Text;
-                MenuItems.Add(new MenuItem { Name = name, Price = price, Photo = photo });
+                string category = (cmbFilterCategory.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "Uncategorized";
+
+                MenuItems.Add(new MenuItem { Name = name, Price = price, Photo = photo, Category = category });
                 // Clear the input fields after adding a food item
                 txtFoodName.Clear();
                 txtFoodPrice.Clear();
@@ -80,6 +82,19 @@ namespace RestaurantMenu
                 txtFoodPhoto.Text = selectedFilePath; // Display the file path in the TextBox
             }
         }
+        private void FilterCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selectedCategory = (cmbFilterCategory.SelectedItem as ComboBoxItem)?.Content?.ToString();
+            if (selectedCategory == "All")
+            {
+                lstMenu.ItemsSource = MenuItems;
+            }
+            else
+            {
+                lstMenu.ItemsSource = MenuItems.Where(item => item.Category == selectedCategory);
+            }
+        }
+
     }
 
     public class MenuItem
@@ -87,7 +102,8 @@ namespace RestaurantMenu
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Photo { get; set; }
-        public string FilePath { get; set; }
+        public string Category { get; set; } // Add this property
     }
+
 
 }

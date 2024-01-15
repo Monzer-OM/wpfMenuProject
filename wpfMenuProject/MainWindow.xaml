@@ -23,10 +23,18 @@
                 <TextBlock Text="Photo URL:" Margin="0,0,10,0"/>
                 <TextBox x:Name="txtFoodPhoto" Width="200"/>
                 <Button Content="Upload Photo" Click="UploadPhoto_Click"/>
-
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Category:" Margin="0,0,10,0"/>
+                <ComboBox x:Name="cmbFilterCategory" Width="200" SelectionChanged="FilterCategory_SelectionChanged">
+                    <ComboBoxItem Content="All"/>
+                    <ComboBoxItem Content="International Foods"/>
+                    <ComboBoxItem Content="Fast Food"/>
+                    <ComboBoxItem Content="Turkish Foods"/>
+                    <!-- Add more categories as needed -->
+                </ComboBox>
             </StackPanel>
             <Button Content="Add Food" Click="AddFood_Click"/>
-
         </StackPanel>
 
         <!-- Display Food Menu -->
@@ -63,6 +71,7 @@
                         </Image>
                         <TextBlock Text="{Binding Name}" FontWeight="Bold" Width="150"/>
                         <TextBlock Text="{Binding Price, StringFormat={}{0:C}}" Width="100"/>
+                        <TextBlock Text="{Binding Category}" Width="150"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
